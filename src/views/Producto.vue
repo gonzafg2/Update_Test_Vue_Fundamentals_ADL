@@ -11,25 +11,31 @@
             ></b-card-img>
           </b-col>
           <b-col md="6">
-            <b-card-body
-              class="text-capitalize"
-              :title="`Pizza de ${pizza.name}`"
-            >
+            <b-card-body>
+              <b-card-title class="text-capitalize">
+                {{ `Pizza ${pizza.name}` }}
+              </b-card-title>
+              
               <b-card-text>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam
-                esse aliquam rerum nobis! Consectetur corporis dolorem labore
-                laudantium adipisci quam expedita maxime, ab qui, enim
-                repudiandae minus magni facilis porro!
+                {{ pizza.desc }}
               </b-card-text>
+
               <h6>Ingredientes</h6>
-              <ul v-if="pizza && pizza.ing">
+              <ul class="text-capitalize" v-if="pizza && pizza.ing">
                 <li v-for="(item, i) in pizza.ing" :key="i">
                   {{ item.name }}
                 </li>
               </ul>
               <h4>Precio: $ {{ pizza.price.toLocaleString("de-DE") }}</h4>
               <b-button
-                @click="agregar_carrito({ id: pizza.id, cant: 1, precio: pizza.price, name: pizza.name })"
+                @click="
+                  agregar_carrito({
+                    id: pizza.id,
+                    cant: 1,
+                    precio: pizza.price,
+                    name: pizza.name,
+                  })
+                "
                 variant="primary"
                 >Agregar a Carrito (+1)</b-button
               >

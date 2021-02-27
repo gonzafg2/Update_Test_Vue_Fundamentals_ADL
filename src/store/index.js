@@ -38,9 +38,12 @@ export default new Vuex.Store({
     totalCarrito(state) {
       const carrito = state.carrito;
       if (carrito && carrito.length === 0) return 0;
-      const total = carrito.map((el) => el.precio).reduce((uno, dos) => uno + dos).toLocaleString("de-DE");
+      const total = carrito
+        .map((el) => el.precio)
+        .reduce((uno, dos) => uno + dos)
+        .toLocaleString("de-DE");
       return total;
-    }
+    },
   },
   mutations: {
     AgregarCarrito(state, payload) {
@@ -49,82 +52,80 @@ export default new Vuex.Store({
       const precio = payload.precio;
       const productos = state.productos;
       const carrito = state.carrito;
-      if (!payload ) return;
 
-      // Verificar que el producto existe en el estado.
-      const existeEstado = productos.find((el) => el.id === id);
-      if (!existeEstado ) {
-        console.log("Producto No Encontrado");
+      // Verificar que exista el producto.
+      const productoExiste = productos.find((fn) => fn.id === id);
+      if (!productoExiste) {
+        alert(`Este producto no existe: ${id}`);
         return;
       }
 
-      // Verificar que el producto esté en Carrito.
+      // Verificar que el producto esté en Carrito PREVIAMENTE.
       const existeCarrito = carrito.find((el) => el.id === id);
 
       // Si existe en carrito sumar cantidad y precio añadidos
-      if (existeCarrito) {
-        existeCarrito.cant += cant;
-        existeCarrito.precio += precio;
-      }
-
-      // Si no existe, agregar al Carrito.
-      else carrito.push(payload);
+      existeCarrito
+        ? (existeCarrito.cant += cant) && (existeCarrito.precio += precio)
+        : carrito.push(payload); // Si no existe, agregar al Carrito.
     },
     AgregarVenta(state) {
       const carrito = state.carrito;
       const totalCarrito = this.getters.totalCarrito;
       const now = new Date();
 
-      // Reunir id's de los productos en un arreglo.
-      const productos = carrito.map((mapped) => mapped.id);
+      // Reunir id's y cant vendida de los productos en un arreglo.
+      const productos = carrito.map((mapped) => {
+        return {
+          id: mapped.id,
+          cant: mapped.cant,
+        };
+      });
 
       const venta = {
         fecha: now,
         productos,
-        total: totalCarrito
-      }
+        total: totalCarrito,
+      };
       // Agregar Venta a estado.
-      state.ventas.push(venta)
+      state.ventas.push(venta);
     },
     ActualizarStock(state) {
       const carrito = state.carrito;
-      carrito.forEach(el => {
+      carrito.forEach((el) => {
         const id = el.id;
         const cant = el.cant;
-        const finder = state.productos.find(el => el.id === id)
-        finder.stock -= cant;
-      })
+        const producto = state.productos.find((el) => el.id === id);
+        // Descontar el stock vendido.
+        producto.stock -= cant;
+      });
     },
     EliminarProducto(state, payload) {
       const id = payload.id;
       const carrito = state.carrito;
-      if (!payload || !carrito) return;
+      if (!payload || !carrito) return; // Buena Práctica !
 
       // Quitar del carrito el Producto.
-      const filtered = carrito.filter(fil => fil.id !== id);
+      const filtered = carrito.filter((fil) => fil.id !== id);
       state.carrito = filtered;
     },
     EliminarCarrito(state) {
       state.carrito = [];
-    }
+    },
   },
   actions: {
     agregar_carrito({ commit }, payload) {
-      const data = payload;
-      if (!data) return;
-      this.commit("AgregarCarrito", data);
+      this.commit("AgregarCarrito", payload);
     },
     eliminar_producto({ commit }, payload) {
       const data = payload;
       if (!data) return;
       this.commit("EliminarProducto", data);
     },
-    pagar_carrito({ commit }) { 
-      this.commit("AgregarVenta");
+    pagar_carrito({ commit }) {
       this.commit("ActualizarStock");
+      this.commit("AgregarVenta");
       this.commit("EliminarCarrito");
       alert("¡Gracias por su compra!");
-    }
+    },
   },
-  // modules: {},
 });

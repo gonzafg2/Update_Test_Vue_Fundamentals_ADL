@@ -1,6 +1,10 @@
 <template>
   <b-navbar toggleable="lg" type="dark" variant="info" fixed="top">
-    <b-navbar-brand to="/">Pizzería My Store</b-navbar-brand>
+    <b-container>
+
+    <b-navbar-brand to="/">
+      <i class="fas fa-pizza-slice mr-2"></i> Pizzería My Store
+    </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -13,6 +17,7 @@
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
+    </b-container>
   </b-navbar>
 </template>
 

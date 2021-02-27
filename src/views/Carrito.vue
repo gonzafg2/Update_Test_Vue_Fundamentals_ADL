@@ -1,6 +1,6 @@
 <template>
-  <div class="mt-5 pt-5 text-center">
-    <h2 class="my-5">Carrito de Compras</h2>
+  <div class="container pt-4 text-center">
+    <h2 class="my-5 pb-3">Carrito de Compras</h2>
     <b-table
       :items="carrito"
       :fields="fields"
@@ -9,8 +9,8 @@
       hover
       show-empty
       striped
-      thead-class="bg-success text-white"
-      tfoot-class="bg-success text-white"
+      thead-class="bg-info text-white"
+      tfoot-class="bg-info text-white"
     >
       <template #cell(name)="row">
         <span class="text-capitalize">{{ row.item.name }}</span>
@@ -46,8 +46,6 @@
         </tr>
       </template>
     </b-table>
-
-    <b-row> </b-row>
   </div>
 </template>
 

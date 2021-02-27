@@ -1,11 +1,11 @@
 <template>
-  <b-col cols="4" class="my-4">
+  <b-col cols="3" class="my-4">
     <b-card
       :title="name"
       :img-src="img"
       :img-alt="name"
       img-top
-      class="mb-3 shadow"
+      class="mb-3 mx-4 shadow"
     >
       <hr />
 
@@ -74,6 +74,8 @@ export default {
   },
   computed: {
     precioFormateado() {
+      const precio = this.precio;
+      if(!precio) return "Cargando...";
       return this.precio.toLocaleString("de-DE");
     },
   },
