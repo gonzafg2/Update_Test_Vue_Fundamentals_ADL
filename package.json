@@ -9,11 +9,11 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "bootstrap": "^4.6.0",
+    "axios": "^0.30.0",
+    "bootstrap": "^5.0.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
-    "vue": "^2.6.12",
+    "vue": "^3.0.0",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
   },
@@ -28,6 +28,6 @@
     "prettier": "^1.19.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.7.16"
   }
 }
